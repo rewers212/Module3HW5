@@ -11,6 +11,7 @@ namespace Module3HW5
         public static void Main(string[] args)
         {
             var text = Result().GetAwaiter().GetResult();
+            Console.WriteLine(text);
         }
 
         public static async Task<string> ReadHello()
@@ -29,6 +30,11 @@ namespace Module3HW5
 
         public static async Task<string> Result()
         {
+            var result = new List<Task<string>>();
+            result.Add(ReadHello());
+            result.Add(ReadWorld());
+            var text = string.Join(" ", await Task.WhenAll(result));
+            return text;
         }
     }
 }
